@@ -1,0 +1,2068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RÉSUMÉ.AI — Land the Interview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+
+<style>
+/* ── RESET + ROOT ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:      #0c0b09;
+  --ink2:     #161410;
+  --ink3:     #1e1c18;
+  --ink4:     #2a2820;
+  --cream:    #e8e0d0;
+  --cream2:   #d4c9b4;
+  --muted:    #5a5448;
+  --faint:    #2e2c26;
+  --accent:   #c8a96e;
+  --accent2:  #e8c97a;
+  --green:    #4ade80;
+  --red:      #f87171;
+  --amber:    #facc15;
+  --white:    #ffffff;
+
+  --serif:    'Playfair Display', Georgia, serif;
+  --mono:     'DM Mono', 'Courier New', monospace;
+  --body:     'Cormorant Garamond', Georgia, serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:   cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--mono);
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* Grain overlay — applied via pseudo on body */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.35;
+}
+
+/* ── TYPOGRAPHY ───────────────────────────────────────────────────────────── */
+.display {
+  font-family: var(--serif);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+.headline {
+  font-family: var(--serif);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.body-text {
+  font-family: var(--body);
+  font-size: 18px;
+  line-height: 1.75;
+  font-weight: 300;
+  color: var(--cream2);
+}
+
+/* ── ANIMATIONS ───────────────────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideRight {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}
+@keyframes scoreCount {
+  from { stroke-dashoffset: 314; }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+@keyframes scanline {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes borderPulse {
+  0%, 100% { border-color: var(--faint); }
+  50%       { border-color: var(--accent); }
+}
+
+/* ── SCROLL-REVEAL ────────────────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+
+/* ── NAV ──────────────────────────────────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 20px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(to bottom, rgba(12,11,9,0.95) 0%, transparent 100%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: padding 0.3s var(--ease-in-out);
+}
+nav.scrolled {
+  padding: 14px 48px;
+  background: rgba(12,11,9,0.97);
+  border-bottom: 1px solid var(--faint);
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--cream);
+  text-decoration: none;
+}
+.nav-logo span { color: var(--muted); }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--cream); }
+.nav-cta {
+  background: var(--cream);
+  color: var(--ink);
+  padding: 10px 22px;
+  border-radius: 2px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.nav-cta:hover {
+  background: var(--accent2);
+  transform: translateY(-1px);
+}
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--cream);
+  transition: all 0.3s;
+}
+
+/* ── HERO ─────────────────────────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 140px 48px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Diagonal accent line */
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent 0%, var(--faint) 30%, var(--accent) 60%, transparent 100%);
+  opacity: 0.6;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+  animation: fadeUp 0.8s var(--ease-out-expo) 0.2s both;
+}
+.hero-eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2s infinite;
+}
+.hero-eyebrow-text {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.hero-title {
+  font-size: clamp(52px, 7vw, 96px);
+  margin-bottom: 12px;
+  animation: fadeUp 0.9s var(--ease-out-expo) 0.3s both;
+  color: var(--cream);
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.hero-subtitle {
+  font-size: clamp(48px, 6vw, 80px);
+  color: var(--muted);
+  margin-bottom: 36px;
+  animation: fadeUp 0.9s var(--ease-out-expo) 0.4s both;
+}
+
+.hero-body {
+  max-width: 440px;
+  margin-bottom: 44px;
+  animation: fadeUp 0.9s var(--ease-out-expo) 0.5s both;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  animation: fadeUp 0.9s var(--ease-out-expo) 0.6s both;
+}
+
+.btn-primary {
+  background: var(--cream);
+  color: var(--ink);
+  padding: 16px 36px;
+  border-radius: 2px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out-expo);
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent2);
+  transform: translateX(-100%);
+  transition: transform 0.3s var(--ease-out-expo);
+}
+.btn-primary:hover::before { transform: translateX(0); }
+.btn-primary span { position: relative; z-index: 1; }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(200,169,110,0.25); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--cream2);
+  padding: 15px 28px;
+  border-radius: 2px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--faint);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-ghost:hover { border-color: var(--cream2); color: var(--cream); }
+
+.hero-stat {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+.hero-stat strong {
+  display: block;
+  font-size: 26px;
+  font-family: var(--serif);
+  font-weight: 800;
+  color: var(--cream);
+  letter-spacing: -0.02em;
+  margin-bottom: 2px;
+}
+
+/* ── HERO VISUAL — live score widget ─────────────────────────────────────── */
+.hero-visual {
+  animation: fadeIn 1.2s var(--ease-out-expo) 0.6s both;
+  position: relative;
+}
+
+.score-widget {
+  background: var(--ink2);
+  border: 1px solid var(--ink4);
+  border-radius: 8px;
+  padding: 32px;
+  position: relative;
+  animation: float 6s ease-in-out infinite;
+  box-shadow: 0 32px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(200,169,110,0.05);
+}
+.score-widget::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, rgba(200,169,110,0.15), transparent 50%, rgba(200,169,110,0.05));
+  pointer-events: none;
+}
+
+.widget-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.widget-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--faint);
+}
+
+.score-hero-row {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-bottom: 28px;
+}
+
+.ring-large {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+}
+.ring-large svg {
+  position: absolute;
+  top: 0; left: 0;
+  transform: rotate(-90deg);
+}
+.ring-large .ring-val {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--amber);
+}
+
+.score-meta {
+  flex: 1;
+}
+.score-verdict {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+.score-verdict em { color: var(--amber); font-style: italic; }
+.score-sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.score-breakdown {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--faint);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.score-cell {
+  background: var(--ink3);
+  padding: 12px 14px;
+}
+.score-cell-val {
+  font-family: var(--mono);
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.score-cell-lbl {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.widget-gap {
+  background: rgba(200,60,60,0.08);
+  border: 1px solid rgba(200,60,60,0.18);
+  border-radius: 4px;
+  padding: 10px 13px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: #cc4444;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.widget-reco {
+  background: rgba(200,169,110,0.07);
+  border: 1px solid rgba(200,169,110,0.2);
+  border-radius: 4px;
+  padding: 10px 13px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--accent);
+  line-height: 1.6;
+}
+
+/* Floating badge */
+.hero-badge {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  background: var(--accent);
+  color: var(--ink);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.4;
+  animation: float 4s ease-in-out 1s infinite;
+  box-shadow: 0 8px 24px rgba(200,169,110,0.35);
+}
+
+/* ── TICKER ───────────────────────────────────────────────────────────────── */
+.ticker {
+  overflow: hidden;
+  padding: 14px 0;
+  border-top: 1px solid var(--faint);
+  border-bottom: 1px solid var(--faint);
+  background: var(--ink2);
+}
+.ticker-track {
+  display: flex;
+  gap: 0;
+  animation: marquee 28s linear infinite;
+  white-space: nowrap;
+}
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 32px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ticker-item::after {
+  content: '·';
+  color: var(--accent);
+  font-size: 14px;
+}
+
+/* ── SECTION SHARED ──────────────────────────────────────────────────────── */
+section {
+  padding: 120px 48px;
+}
+.section-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.section-label::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: var(--accent);
+}
+.section-number {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+}
+
+/* ── HOW IT WORKS ─────────────────────────────────────────────────────────── */
+.how-title {
+  font-size: clamp(36px, 5vw, 64px);
+  max-width: 600px;
+  margin-bottom: 72px;
+  color: var(--cream);
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--faint);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.step-card {
+  background: var(--ink2);
+  padding: 44px 36px;
+  position: relative;
+  transition: background 0.3s;
+}
+.step-card:hover { background: var(--ink3); }
+
+.step-number {
+  font-family: var(--serif);
+  font-size: 72px;
+  font-weight: 900;
+  color: var(--faint);
+  line-height: 1;
+  margin-bottom: 28px;
+  transition: color 0.3s;
+}
+.step-card:hover .step-number { color: var(--ink4); }
+
+.step-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+
+.step-body {
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+.step-tag {
+  display: inline-block;
+  margin-top: 20px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid rgba(200,169,110,0.25);
+  padding: 4px 10px;
+  border-radius: 2px;
+}
+
+.step-connector {
+  position: absolute;
+  top: 44px; right: -13px;
+  width: 26px;
+  height: 26px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--ink);
+  z-index: 2;
+  font-family: var(--mono);
+}
+
+/* ── FEATURES ─────────────────────────────────────────────────────────────── */
+.features {
+  background: var(--ink2);
+  border-top: 1px solid var(--faint);
+  border-bottom: 1px solid var(--faint);
+}
+
+.features-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: end;
+  margin-bottom: 80px;
+}
+
+.features-title {
+  font-size: clamp(36px, 4.5vw, 60px);
+  color: var(--cream);
+}
+
+.features-desc {
+  font-family: var(--body);
+  font-size: 18px;
+  line-height: 1.75;
+  color: var(--cream2);
+  font-weight: 300;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.feature-item {
+  border-top: 1px solid var(--faint);
+  padding-top: 28px;
+  transition: border-color 0.3s;
+}
+.feature-item:hover { border-color: var(--accent); }
+
+.feature-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--ink3);
+  border: 1px solid var(--ink4);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  margin-bottom: 18px;
+  transition: all 0.3s;
+}
+.feature-item:hover .feature-icon {
+  background: rgba(200,169,110,0.1);
+  border-color: var(--accent);
+}
+
+.feature-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 10px;
+}
+
+.feature-body {
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+/* ── ATS EXPLAINER ────────────────────────────────────────────────────────── */
+.ats-section {
+  background: var(--ink);
+}
+
+.ats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.ats-title {
+  font-size: clamp(32px, 4vw, 52px);
+  color: var(--cream);
+  margin-bottom: 24px;
+}
+.ats-title em { color: var(--accent); font-style: italic; }
+
+.ats-body {
+  font-family: var(--body);
+  font-size: 18px;
+  line-height: 1.8;
+  color: var(--cream2);
+  font-weight: 300;
+  margin-bottom: 32px;
+}
+
+.ats-stat-row {
+  display: flex;
+  gap: 36px;
+  flex-wrap: wrap;
+}
+
+.ats-stat {
+  border-left: 2px solid var(--accent);
+  padding-left: 16px;
+}
+.ats-stat-val {
+  font-family: var(--serif);
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--cream);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.ats-stat-lbl {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+/* Score viz for ATS section */
+.ats-visual {
+  background: var(--ink2);
+  border: 1px solid var(--ink4);
+  border-radius: 8px;
+  padding: 36px;
+  box-shadow: 0 24px 48px rgba(0,0,0,0.4);
+}
+
+.ats-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.ats-bar-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  width: 80px;
+  flex-shrink: 0;
+}
+.ats-bar-track {
+  flex: 1;
+  height: 6px;
+  background: var(--faint);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.ats-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.2s var(--ease-out-expo);
+}
+.ats-bar-fill.animated { transform: scaleX(1); }
+.ats-bar-val {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--cream2);
+  width: 30px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── TESTIMONIALS ─────────────────────────────────────────────────────────── */
+.testimonials { background: var(--ink2); border-top: 1px solid var(--faint); }
+
+.testimonials-title {
+  font-size: clamp(32px, 4vw, 52px);
+  color: var(--cream);
+  margin-bottom: 64px;
+  max-width: 480px;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.testimonial-card {
+  background: var(--ink3);
+  border: 1px solid var(--ink4);
+  border-radius: 6px;
+  padding: 36px 32px;
+  transition: all 0.3s;
+  position: relative;
+}
+.testimonial-card:hover {
+  border-color: rgba(200,169,110,0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+}
+.testimonial-card::before {
+  content: '"';
+  font-family: var(--serif);
+  font-size: 80px;
+  color: var(--faint);
+  position: absolute;
+  top: 12px; right: 20px;
+  line-height: 1;
+}
+
+.testimonial-quote {
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--cream2);
+  font-weight: 300;
+  margin-bottom: 28px;
+  font-style: italic;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.testimonial-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--ink4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.testimonial-name {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--cream);
+  letter-spacing: 0.06em;
+}
+.testimonial-role {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.score-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(74,222,128,0.08);
+  border: 1px solid rgba(74,222,128,0.2);
+  border-radius: 12px;
+  padding: 3px 10px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--green);
+  margin-bottom: 16px;
+}
+.score-chip::before { content: '↑'; font-size: 10px; }
+
+/* ── CTA SECTION ──────────────────────────────────────────────────────────── */
+.cta-section {
+  background: var(--ink);
+  text-align: center;
+  padding: 140px 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(200,169,110,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cta-label {
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.cta-title {
+  font-size: clamp(42px, 6vw, 80px);
+  color: var(--cream);
+  margin-bottom: 20px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cta-title em { color: var(--accent); font-style: italic; }
+
+.cta-body {
+  font-family: var(--body);
+  font-size: 18px;
+  color: var(--cream2);
+  max-width: 460px;
+  margin: 0 auto 48px;
+  line-height: 1.75;
+  font-weight: 300;
+}
+
+.cta-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.cta-fine {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+/* ── FOOTER ───────────────────────────────────────────────────────────────── */
+footer {
+  background: var(--ink2);
+  border-top: 1px solid var(--faint);
+  padding: 56px 48px 36px;
+}
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 48px;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.footer-brand {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--cream);
+}
+.footer-brand span { color: var(--muted); }
+.footer-tagline {
+  font-family: var(--body);
+  font-size: 15px;
+  color: var(--muted);
+  margin-top: 8px;
+  font-style: italic;
+}
+.footer-links {
+  display: flex;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+.footer-col-title {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+.footer-col a {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  text-decoration: none;
+  margin-bottom: 10px;
+  letter-spacing: 0.06em;
+  transition: color 0.2s;
+}
+.footer-col a:hover { color: var(--cream); }
+.footer-bottom {
+  border-top: 1px solid var(--faint);
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.footer-copy {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+/* ── AUTH MODAL ───────────────────────────────────────────────────────────── */
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8,7,5,0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease-in-out);
+}
+.auth-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.auth-modal {
+  width: 100%;
+  max-width: 960px;
+  background: var(--ink2);
+  border: 1px solid var(--ink4);
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+  transform: translateY(20px) scale(0.98);
+  transition: transform 0.4s var(--ease-out-expo);
+  max-height: 90vh;
+}
+.auth-overlay.open .auth-modal {
+  transform: translateY(0) scale(1);
+}
+
+/* Auth left panel — visual */
+.auth-left {
+  background: var(--ink3);
+  padding: 56px 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+.auth-left::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 20% 80%, rgba(200,169,110,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.auth-left-brand {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--cream);
+}
+.auth-left-brand span { color: var(--muted); }
+
+.auth-left-headline {
+  font-family: var(--serif);
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--cream);
+  margin-bottom: 16px;
+}
+.auth-left-headline em { color: var(--accent); font-style: italic; }
+
+.auth-left-body {
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+.auth-features {
+  list-style: none;
+  margin-top: 28px;
+}
+.auth-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.auth-features li::before {
+  content: '✓';
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.auth-score-mini {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--ink4);
+  border-radius: 4px;
+  padding: 12px 16px;
+}
+.auth-score-num {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--green);
+}
+.auth-score-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* Auth right — form */
+.auth-right {
+  padding: 48px 44px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.auth-close {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  margin-bottom: 32px;
+  transition: color 0.2s;
+}
+.auth-close:hover { color: var(--cream); }
+
+.auth-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--faint);
+  margin-bottom: 36px;
+}
+.auth-tab {
+  background: none;
+  border: none;
+  padding: 10px 0;
+  margin-right: 28px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all 0.2s;
+}
+.auth-tab.active {
+  color: var(--cream);
+  border-bottom-color: var(--cream);
+}
+
+.auth-form { display: flex; flex-direction: column; gap: 18px; }
+
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+
+.form-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.form-input {
+  background: var(--ink3);
+  border: 1px solid var(--ink4);
+  border-radius: 3px;
+  color: var(--cream);
+  padding: 13px 16px;
+  font-family: var(--mono);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+.form-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(200,169,110,0.1);
+}
+.form-input::placeholder { color: var(--faint); }
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.form-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--faint);
+  text-transform: uppercase;
+}
+.form-divider::before, .form-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--faint);
+}
+
+.btn-form {
+  background: var(--cream);
+  color: var(--ink);
+  border: none;
+  padding: 14px 24px;
+  border-radius: 3px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+}
+.btn-form:hover {
+  background: var(--accent2);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(200,169,110,0.2);
+}
+
+.btn-oauth {
+  background: transparent;
+  color: var(--cream2);
+  border: 1px solid var(--ink4);
+  padding: 12px 16px;
+  border-radius: 3px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+.btn-oauth:hover {
+  border-color: var(--cream2);
+  color: var(--cream);
+}
+
+.form-footer {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+.form-footer a {
+  color: var(--accent);
+  text-decoration: none;
+  cursor: pointer;
+}
+.form-footer a:hover { text-decoration: underline; }
+
+/* Auth form panel switching */
+.auth-panel { display: none; }
+.auth-panel.active { display: flex; flex-direction: column; gap: 18px; }
+
+/* ── MOBILE NAV DRAWER ─────────────────────────────────────────────────────── */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  background: var(--ink);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  padding: 80px 32px 48px;
+  transform: translateX(100%);
+  transition: transform 0.4s var(--ease-out-expo);
+}
+.mobile-menu.open { transform: translateX(0); }
+.mobile-menu a {
+  font-family: var(--serif);
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--cream);
+  text-decoration: none;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--faint);
+  transition: color 0.2s;
+}
+.mobile-menu a:hover { color: var(--accent); }
+.mobile-menu-cta {
+  margin-top: 36px;
+}
+
+/* ── RESPONSIVE ───────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  nav { padding: 16px 28px; }
+  nav.scrolled { padding: 12px 28px; }
+  .nav-links { gap: 24px; }
+  section { padding: 80px 28px; }
+  .hero { padding: 120px 28px 60px; }
+  .hero-grid { gap: 40px; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .step-connector { display: none; }
+  .features-header { grid-template-columns: 1fr; gap: 24px; }
+  .features-grid { grid-template-columns: repeat(2, 1fr); }
+  .ats-grid { grid-template-columns: 1fr; gap: 48px; }
+  .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+  .auth-modal { grid-template-columns: 1fr; }
+  .auth-left { display: none; }
+  footer { padding: 48px 28px 28px; }
+}
+
+@media (max-width: 768px) {
+  nav { padding: 14px 20px; }
+  nav.scrolled { padding: 10px 20px; }
+  .nav-links { display: none; }
+  .nav-cta { display: none; }
+  .nav-hamburger { display: flex; }
+  .hero { padding: 100px 20px 60px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+  .hero-visual { order: -1; }
+  section { padding: 64px 20px; }
+  .features-grid { grid-template-columns: 1fr; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .cta-section { padding: 80px 20px; }
+  .auth-modal { max-width: 100%; margin: 0; border-radius: 12px 12px 0 0; align-self: flex-end; }
+  .auth-overlay { align-items: flex-end; padding: 0; }
+  .auth-right { padding: 32px 24px 48px; }
+  footer { padding: 40px 20px 24px; }
+  .footer-top { flex-direction: column; gap: 28px; }
+  .footer-links { gap: 36px; }
+  .form-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── MOBILE MENU ─────────────────────────────────────────────────────────── -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#how">How It Works</a>
+  <a href="#features">Features</a>
+  <a href="#ats">ATS Score</a>
+  <a href="#testimonials">Stories</a>
+  <div class="mobile-menu-cta">
+    <button class="btn-primary" style="width:100%;display:block;text-align:center" onclick="openAuth('signup')">
+      <span>Start Free →</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── NAV ────────────────────────────────────────────────────────────────── -->
+<nav id="nav">
+  <a class="nav-logo" href="#">RÉSUMÉ<span>.AI</span></a>
+  <ul class="nav-links">
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#ats">ATS Score</a></li>
+    <li><a href="#testimonials">Stories</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:12px">
+    <a href="#" class="nav-cta" onclick="openAuth('login');return false;">Sign In</a>
+    <a href="#" class="btn-primary" style="padding:10px 20px;font-size:11px" onclick="openAuth('signup');return false;"><span>Start Free</span></a>
+    <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── HERO ───────────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-dot"></div>
+        <span class="hero-eyebrow-text">AI-Powered Resume Intelligence</span>
+      </div>
+      <h1 class="display hero-title">Land the<br /><em>interview.</em></h1>
+      <h2 class="display hero-subtitle">Every time.</h2>
+      <p class="body-text hero-body">
+        Your resume is rewritten by AI to match each job's exact keywords, beat ATS filters, and make recruiters stop scrolling.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="openAuth('signup')">
+          <span>Build My Resume — Free</span>
+        </button>
+        <a href="#how" class="btn-ghost">See how it works</a>
+      </div>
+      <div style="display:flex;gap:40px;margin-top:44px;flex-wrap:wrap">
+        <div class="hero-stat">
+          <strong>3×</strong>
+          more interviews on average
+        </div>
+        <div class="hero-stat">
+          <strong>87%</strong>
+          ATS pass rate
+        </div>
+        <div class="hero-stat">
+          <strong>45s</strong>
+          to your tailored resume
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="score-widget">
+        <div class="widget-label">ATS Analysis</div>
+        <div class="score-hero-row">
+          <div class="ring-large">
+            <svg width="120" height="120" viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="46" fill="none" stroke="#2a2820" stroke-width="6"/>
+              <circle cx="60" cy="60" r="46" fill="none" stroke="#facc15" stroke-width="6"
+                stroke-dasharray="289" stroke-dashoffset="289" stroke-linecap="round"
+                id="heroRing" style="transition:stroke-dashoffset 1.8s cubic-bezier(0.16,1,0.3,1) 0.8s"/>
+            </svg>
+            <div class="ring-val" id="heroScore">0</div>
+          </div>
+          <div class="score-meta">
+            <div class="score-verdict">Room to <em>improve.</em></div>
+            <div class="score-sub">68 of 112 job keywords matched.<br/>Address gaps before applying.</div>
+          </div>
+        </div>
+        <div class="score-breakdown">
+          <div class="score-cell">
+            <div class="score-cell-val" style="color:#facc15">68</div>
+            <div class="score-cell-lbl">Keywords</div>
+          </div>
+          <div class="score-cell">
+            <div class="score-cell-val" style="color:#4ade80">84</div>
+            <div class="score-cell-lbl">Depth</div>
+          </div>
+          <div class="score-cell">
+            <div class="score-cell-val" style="color:#facc15">71</div>
+            <div class="score-cell-lbl">Quality</div>
+          </div>
+          <div class="score-cell">
+            <div class="score-cell-val" style="color:#4ade80">90</div>
+            <div class="score-cell-lbl">Format</div>
+          </div>
+        </div>
+        <div class="widget-gap">✕ No explicit TypeScript or React experience found</div>
+        <div class="widget-reco">⟶ AI rewrote 4 bullets using exact JD language</div>
+
+        <div class="hero-badge">AI<br/>Scored</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TICKER ──────────────────────────────────────────────────────────────── -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">ATS Optimization</span>
+    <span class="ticker-item">Keyword Matching</span>
+    <span class="ticker-item">Inline Editing</span>
+    <span class="ticker-item">Cover Letter Generation</span>
+    <span class="ticker-item">Dark & Light Mode</span>
+    <span class="ticker-item">PDF Export</span>
+    <span class="ticker-item">Section Regeneration</span>
+    <span class="ticker-item">Vague JD Support</span>
+    <span class="ticker-item">No-Experience Friendly</span>
+    <span class="ticker-item">Deterministic Scoring</span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-item">ATS Optimization</span>
+    <span class="ticker-item">Keyword Matching</span>
+    <span class="ticker-item">Inline Editing</span>
+    <span class="ticker-item">Cover Letter Generation</span>
+    <span class="ticker-item">Dark & Light Mode</span>
+    <span class="ticker-item">PDF Export</span>
+    <span class="ticker-item">Section Regeneration</span>
+    <span class="ticker-item">Vague JD Support</span>
+    <span class="ticker-item">No-Experience Friendly</span>
+    <span class="ticker-item">Deterministic Scoring</span>
+  </div>
+</div>
+
+<!-- ── HOW IT WORKS ───────────────────────────────────────────────────────── -->
+<section id="how">
+  <div class="section-inner">
+    <div class="section-label reveal">
+      <span class="section-number">01 — Process</span>
+    </div>
+    <h2 class="headline how-title reveal reveal-delay-1">From blank page to interview call in three steps.</h2>
+
+    <div class="steps-grid">
+      <div class="step-card reveal reveal-delay-1">
+        <div class="step-number">01</div>
+        <h3 class="step-title">Paste the job posting</h3>
+        <p class="step-body">Drop in the full job description — or just the title if the posting is sparse. The AI infers requirements from context. No job posting at all? Set a target role and it works from that.</p>
+        <span class="step-tag">Vague JD supported</span>
+        <div class="step-connector">→</div>
+      </div>
+      <div class="step-card reveal reveal-delay-2">
+        <div class="step-number">02</div>
+        <h3 class="step-title">Describe your background</h3>
+        <p class="step-body">Write freely about your experience, education, and skills — no formatting required. Fresh graduate with no work history? The AI builds from coursework, projects, and transferable skills.</p>
+        <span class="step-tag">Works for all levels</span>
+        <div class="step-connector">→</div>
+      </div>
+      <div class="step-card reveal reveal-delay-3">
+        <div class="step-number">03</div>
+        <h3 class="step-title">Get a scored, tailored resume</h3>
+        <p class="step-body">In 30 seconds: a fully written, ATS-optimized resume with a real keyword match score. Edit any text inline, regenerate weak sections, and export to PDF when it's ready.</p>
+        <span class="step-tag">Editable + exportable</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES ───────────────────────────────────────────────────────────── -->
+<section class="features" id="features">
+  <div class="section-inner">
+    <div class="features-header">
+      <div>
+        <div class="section-label reveal">
+          <span class="section-number">02 — Features</span>
+        </div>
+        <h2 class="headline features-title reveal reveal-delay-1">Built for the way hiring actually works.</h2>
+      </div>
+      <p class="body-text features-desc reveal reveal-delay-2">
+        Every feature was designed around a real hiring problem — not a feature checklist. Nothing superfluous. Everything essential.
+      </p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-item reveal reveal-delay-1">
+        <div class="feature-icon">⚡</div>
+        <h3 class="feature-title">Deterministic ATS Scoring</h3>
+        <p class="feature-body">The score is computed against actual job keywords — not self-reported by the AI that wrote the resume. Auditable, honest, and actionable.</p>
+      </div>
+      <div class="feature-item reveal reveal-delay-2">
+        <div class="feature-icon">✎</div>
+        <h3 class="feature-title">Inline Editing</h3>
+        <p class="feature-body">Click any text on the resume to edit it directly. The ATS score updates in real time as you type. No round-trips, no modals.</p>
+      </div>
+      <div class="feature-item reveal reveal-delay-3">
+        <div class="feature-icon">↺</div>
+        <h3 class="feature-title">Section Regeneration</h3>
+        <p class="feature-body">Weak summary? Underwhelming bullets? Hover any section to reveal a "redo" button. Regenerate just that section without touching the rest.</p>
+      </div>
+      <div class="feature-item reveal reveal-delay-1">
+        <div class="feature-icon">✉</div>
+        <h3 class="feature-title">Cover Letter Generation</h3>
+        <p class="feature-body">One click generates a tailored 3-paragraph cover letter using the same job context. Exports to PDF. Regenerate as many times as you need.</p>
+      </div>
+      <div class="feature-item reveal reveal-delay-2">
+        <div class="feature-icon">🎓</div>
+        <h3 class="feature-title">No-Experience Mode</h3>
+        <p class="feature-body">Students and career starters aren't afterthoughts. Describe your degree, projects, and clubs — the AI builds a full resume from what you have.</p>
+      </div>
+      <div class="feature-item reveal reveal-delay-3">
+        <div class="feature-icon">◑</div>
+        <h3 class="feature-title">Dark &amp; Light Mode</h3>
+        <p class="feature-body">Switch themes at any time. Preference saved automatically. The resume preview is always white — matching your PDF exactly, in any mode.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ATS EXPLAINER ───────────────────────────────────────────────────────── -->
+<section class="ats-section" id="ats">
+  <div class="section-inner">
+    <div class="ats-grid">
+      <div>
+        <div class="section-label reveal">
+          <span class="section-number">03 — The Score</span>
+        </div>
+        <h2 class="headline ats-title reveal reveal-delay-1">Your resume is being <em>filtered</em> before a human reads it.</h2>
+        <p class="body-text ats-body reveal reveal-delay-2">
+          Most companies use Applicant Tracking Systems that reject resumes before any recruiter sees them. The filter is simple: keyword matching. Our score tells you exactly how well you pass it — before you apply.
+        </p>
+        <div class="ats-stat-row reveal reveal-delay-3">
+          <div class="ats-stat">
+            <div class="ats-stat-val">75%</div>
+            <div class="ats-stat-lbl">of resumes rejected<br/>by ATS before review</div>
+          </div>
+          <div class="ats-stat">
+            <div class="ats-stat-val">6s</div>
+            <div class="ats-stat-lbl">average recruiter<br/>glance time</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ats-visual reveal reveal-delay-2">
+        <div class="widget-label">Score Breakdown — Before &amp; After</div>
+        <div style="margin-bottom:28px">
+          <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:14px">Before RÉSUMÉ.AI</div>
+          <div class="ats-bar-row">
+            <span class="ats-bar-label">Keywords</span>
+            <div class="ats-bar-track"><div class="ats-bar-fill" id="bar-b1" style="width:38%;background:var(--red)"></div></div>
+            <span class="ats-bar-val" style="color:var(--red)">38</span>
+          </div>
+          <div class="ats-bar-row">
+            <span class="ats-bar-label">Depth</span>
+            <div class="ats-bar-track"><div class="ats-bar-fill" id="bar-b2" style="width:45%;background:var(--red)"></div></div>
+            <span class="ats-bar-val" style="color:var(--red)">45</span>
+          </div>
+          <div class="ats-bar-row">
+            <span class="ats-bar-label">Quality</span>
+            <div class="ats-bar-track"><div class="ats-bar-fill" id="bar-b3" style="width:52%;background:var(--amber)"></div></div>
+            <span class="ats-bar-val" style="color:var(--amber)">52</span>
+          </div>
+        </div>
+        <div style="border-top:1px solid var(--faint);padding-top:24px">
+          <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">After RÉSUMÉ.AI</div>
+          <div class="ats-bar-row">
+            <span class="ats-bar-label">Keywords</span>
+            <div class="ats-bar-track"><div class="ats-bar-fill" id="bar-a1" style="width:91%;background:var(--green)"></div></div>
+            <span class="ats-bar-val" style="color:var(--green)">91</span>
+          </div>
+          <div class="ats-bar-row">
+            <span class="ats-bar-label">Depth</span>
+            <div class="ats-bar-track"><div class="ats-bar-fill" id="bar-a2" style="width:88%;background:var(--green)"></div></div>
+            <span class="ats-bar-val" style="color:var(--green)">88</span>
+          </div>
+          <div class="ats-bar-row">
+            <span class="ats-bar-label">Quality</span>
+            <div class="ats-bar-track"><div class="ats-bar-fill" id="bar-a3" style="width:84%;background:var(--green)"></div></div>
+            <span class="ats-bar-val" style="color:var(--green)">84</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ────────────────────────────────────────────────────────── -->
+<section class="testimonials" id="testimonials">
+  <div class="section-inner">
+    <div class="section-label reveal">
+      <span class="section-number">04 — Outcomes</span>
+    </div>
+    <h2 class="headline testimonials-title reveal reveal-delay-1">Real people. Real interviews.</h2>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal reveal-delay-1">
+        <div class="score-chip">Score: 38 → 91</div>
+        <p class="testimonial-quote">I'd been applying for months with zero responses. RÉSUMÉ.AI rewrote my resume in 30 seconds and I had three interview requests by the end of the week.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">A</div>
+          <div>
+            <div class="testimonial-name">Amara Osei</div>
+            <div class="testimonial-role">Software Engineer — Lagos</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-2">
+        <div class="score-chip">Score: 51 → 87</div>
+        <p class="testimonial-quote">As a fresh graduate with no work experience, I didn't think AI tools were for me. This one built my entire resume from my university projects. Landed my first role in 2 weeks.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">J</div>
+          <div>
+            <div class="testimonial-name">James Whitfield</div>
+            <div class="testimonial-role">Junior Developer — London</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-3">
+        <div class="score-chip">Score: 44 → 93</div>
+        <p class="testimonial-quote">I was changing careers from finance to product management. The AI bridged my experience perfectly — it reframed everything I'd done in language that product teams actually use.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">S</div>
+          <div>
+            <div class="testimonial-name">Sofía Mendez</div>
+            <div class="testimonial-role">Product Manager — Madrid</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ────────────────────────────────────────────────────────────────── -->
+<section class="cta-section">
+  <div class="cta-bg"></div>
+  <div style="position:relative;z-index:1">
+    <div class="label cta-label reveal">Ready when you are</div>
+    <h2 class="display cta-title reveal reveal-delay-1">Your next interview<br />starts <em>here.</em></h2>
+    <p class="cta-body reveal reveal-delay-2">No credit card. No templates to fill in. Paste a job posting, describe yourself, and get a tailored resume in under a minute.</p>
+    <div class="cta-actions reveal reveal-delay-3">
+      <button class="btn-primary" onclick="openAuth('signup')" style="padding:18px 44px;font-size:13px">
+        <span>Build My Resume — It's Free</span>
+      </button>
+      <button class="btn-ghost" onclick="openAuth('login')">I have an account</button>
+    </div>
+    <p class="cta-fine reveal reveal-delay-4">Free to use · No account required to try</p>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">RÉSUMÉ<span>.AI</span></div>
+        <div class="footer-tagline">Land the interview, every time.</div>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <div class="footer-col-title">Product</div>
+          <a href="#how">How It Works</a>
+          <a href="#features">Features</a>
+          <a href="#ats">ATS Score</a>
+          <a href="#">Pricing</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Resources</div>
+          <a href="#">Resume Guide</a>
+          <a href="#">ATS Checklist</a>
+          <a href="#">Cover Letters</a>
+          <a href="#">Blog</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Company</div>
+          <a href="#">About</a>
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 RÉSUMÉ.AI — All rights reserved</span>
+      <span class="footer-copy">Built with Claude · Anthropic</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ── AUTH MODAL ─────────────────────────────────────────────────────────── -->
+<div class="auth-overlay" id="authOverlay" onclick="handleOverlayClick(event)">
+  <div class="auth-modal" id="authModal">
+    <!-- Left panel -->
+    <div class="auth-left">
+      <div class="auth-left-brand">RÉSUMÉ<span>.AI</span></div>
+      <div>
+        <div class="auth-left-headline">Your resume,<br /><em>rewritten</em> to win.</div>
+        <p class="auth-left-body">Join thousands of candidates who landed interviews with AI-tailored resumes that pass ATS filters.</p>
+        <ul class="auth-features">
+          <li>Keyword-matched to every job you apply for</li>
+          <li>Deterministic ATS score — not self-reported</li>
+          <li>Inline editing with live score updates</li>
+          <li>Cover letter generation included</li>
+          <li>Works for all experience levels</li>
+        </ul>
+      </div>
+      <div class="auth-score-mini">
+        <div class="auth-score-num">91</div>
+        <div class="auth-score-label">Average ATS score<br/>after using RÉSUMÉ.AI</div>
+      </div>
+    </div>
+
+    <!-- Right panel — form -->
+    <div class="auth-right">
+      <button class="auth-close" onclick="closeAuth()">✕</button>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabSignup" onclick="switchTab('signup')">Create Account</button>
+        <button class="auth-tab" id="tabLogin" onclick="switchTab('login')">Sign In</button>
+      </div>
+
+      <!-- Sign up form -->
+      <div class="auth-panel active" id="panelSignup">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input class="form-input" type="text" placeholder="Jane" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input class="form-input" type="text" placeholder="Smith" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" placeholder="jane@example.com" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input class="form-input" type="password" placeholder="8+ characters" />
+        </div>
+        <button class="btn-form" onclick="handleSignup()">Create Free Account →</button>
+        <div class="form-divider">or</div>
+        <button class="btn-oauth" onclick="handleOAuth('google')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
+          Continue with Google
+        </button>
+        <p class="form-footer">
+          Already have an account? <a onclick="switchTab('login')">Sign in</a>
+        </p>
+        <p class="form-footer" style="margin-top:8px">
+          By creating an account you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
+        </p>
+      </div>
+
+      <!-- Login form -->
+      <div class="auth-panel" id="panelLogin">
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" placeholder="jane@example.com" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input class="form-input" type="password" placeholder="Your password" />
+        </div>
+        <button class="btn-form" onclick="handleLogin()">Sign In →</button>
+        <div class="form-divider">or</div>
+        <button class="btn-oauth" onclick="handleOAuth('google')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
+          Continue with Google
+        </button>
+        <p class="form-footer">
+          <a href="#">Forgot your password?</a>
+        </p>
+        <p class="form-footer" style="margin-top:8px">
+          No account? <a onclick="switchTab('signup')">Create one free</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── NAV SCROLL ────────────────────────────────────────────────────────────────
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// ── MOBILE MENU ───────────────────────────────────────────────────────────────
+let menuOpen = false;
+function toggleMenu() {
+  menuOpen = !menuOpen;
+  document.getElementById('mobileMenu').classList.toggle('open', menuOpen);
+  document.body.style.overflow = menuOpen ? 'hidden' : '';
+  const bars = document.querySelectorAll('.nav-hamburger span');
+  if (menuOpen) {
+    bars[0].style.transform = 'rotate(45deg) translate(4.5px, 4.5px)';
+    bars[1].style.opacity = '0';
+    bars[2].style.transform = 'rotate(-45deg) translate(4.5px, -4.5px)';
+  } else {
+    bars.forEach(b => { b.style.transform = ''; b.style.opacity = ''; });
+  }
+}
+document.querySelectorAll('.mobile-menu a').forEach(a => {
+  a.addEventListener('click', () => {
+    menuOpen = false;
+    toggleMenu();
+  });
+});
+
+// ── HERO SCORE ANIMATION ──────────────────────────────────────────────────────
+function animateScore() {
+  const ring = document.getElementById('heroRing');
+  const scoreEl = document.getElementById('heroScore');
+  const target = 72;
+  const circumference = 289;
+  const offset = circumference - (target / 100) * circumference;
+  ring.style.strokeDashoffset = offset;
+
+  let current = 0;
+  const duration = 1800;
+  const start = performance.now();
+  function tick(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    current = Math.round(eased * target);
+    scoreEl.textContent = current;
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+  setTimeout(() => requestAnimationFrame(tick), 800);
+}
+animateScore();
+
+// ── SCROLL REVEAL ─────────────────────────────────────────────────────────────
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ── ATS BARS ANIMATION ────────────────────────────────────────────────────────
+const barObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.ats-bar-fill').forEach((bar, i) => {
+        setTimeout(() => bar.classList.add('animated'), i * 120);
+      });
+      barObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+const atsVisual = document.querySelector('.ats-visual');
+if (atsVisual) barObserver.observe(atsVisual);
+
+// ── AUTH MODAL ────────────────────────────────────────────────────────────────
+function openAuth(tab = 'signup') {
+  document.getElementById('authOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  switchTab(tab);
+}
+function closeAuth() {
+  document.getElementById('authOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('authOverlay')) closeAuth();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAuth(); });
+
+function switchTab(tab) {
+  document.getElementById('tabSignup').classList.toggle('active', tab === 'signup');
+  document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('panelSignup').classList.toggle('active', tab === 'signup');
+  document.getElementById('panelLogin').classList.toggle('active', tab === 'login');
+}
+
+// Stub handlers — wire to your auth backend
+function handleSignup() {
+  const btn = event.currentTarget;
+  btn.textContent = 'Creating account...';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.textContent = '✓ Account created — redirecting';
+    setTimeout(() => { closeAuth(); btn.textContent = 'Create Free Account →'; btn.disabled = false; }, 1200);
+  }, 1400);
+}
+function handleLogin() {
+  const btn = event.currentTarget;
+  btn.textContent = 'Signing in...';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.textContent = '✓ Signed in — redirecting';
+    setTimeout(() => { closeAuth(); btn.textContent = 'Sign In →'; btn.disabled = false; }, 1200);
+  }, 1200);
+}
+function handleOAuth(provider) {
+  console.log('OAuth:', provider, '— wire to your auth provider');
+}
+
+// ── SMOOTH SCROLL ─────────────────────────────────────────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+</script>
+</body>
+</html>
