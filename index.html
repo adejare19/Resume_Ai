@@ -8,6 +8,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
 
+<!-- Vercel Web Analytics -->
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+
 <style>
 /* ── RESET + ROOT ─────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -2011,7 +2017,7 @@ const barObserver = new IntersectionObserver((entries) => {
 const atsVisual = document.querySelector('.ats-visual');
 if (atsVisual) barObserver.observe(atsVisual);
 
-// ── AUTH MODAL ────────────────────────────────────────────────────────────────
+// ── AUTH MODAL ─────────────────────────────────��──────────────────────────────
 function openAuth(tab = 'signup') {
   document.getElementById('authOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
