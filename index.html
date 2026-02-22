@@ -1436,6 +1436,10 @@ footer {
   .form-row { grid-template-columns: 1fr; }
 }
 </style>
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 
@@ -2011,7 +2015,7 @@ const barObserver = new IntersectionObserver((entries) => {
 const atsVisual = document.querySelector('.ats-visual');
 if (atsVisual) barObserver.observe(atsVisual);
 
-// ── AUTH MODAL ────────────────────────────────────────────────────────────────
+// ── AUTH MODAL ─────────────────────────────────��──────────────────────────────
 function openAuth(tab = 'signup') {
   document.getElementById('authOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
