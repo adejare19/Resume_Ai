@@ -1446,7 +1446,7 @@ footer {
   <a href="#ats">ATS Score</a>
   <a href="#testimonials">Stories</a>
   <div class="mobile-menu-cta">
-    <button class="btn-primary" style="width:100%;display:block;text-align:center" onclick="openAuth('signup')">
+    <button class="btn-primary" id="mobileCtaBtn" style="width:100%;display:block;text-align:center">
       <span>Start Free →</span>
     </button>
   </div>
@@ -1462,9 +1462,9 @@ footer {
     <li><a href="#testimonials">Stories</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:12px">
-    <a href="#" class="nav-cta" onclick="openAuth('login');return false;">Sign In</a>
-    <a href="#" class="btn-primary" style="padding:10px 20px;font-size:11px" onclick="openAuth('signup');return false;"><span>Start Free</span></a>
-    <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <a href="#" id="navSignIn" class="nav-cta">Sign In</a>
+    <a href="#" id="navSignUp" class="btn-primary" style="padding:10px 20px;font-size:11px"><span>Start Free</span></a>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -1484,7 +1484,7 @@ footer {
         Your resume is rewritten by AI to match each job's exact keywords, beat ATS filters, and make recruiters stop scrolling.
       </p>
       <div class="hero-actions">
-        <button class="btn-primary" onclick="openAuth('signup')">
+        <button class="btn-primary" id="heroPrimaryBtn">
           <span>Build My Resume — Free</span>
         </button>
         <a href="#how" class="btn-ghost">See how it works</a>
@@ -1781,10 +1781,10 @@ footer {
     <h2 class="display cta-title reveal reveal-delay-1">Your next interview<br />starts <em>here.</em></h2>
     <p class="cta-body reveal reveal-delay-2">No credit card. No templates to fill in. Paste a job posting, describe yourself, and get a tailored resume in under a minute.</p>
     <div class="cta-actions reveal reveal-delay-3">
-      <button class="btn-primary" onclick="openAuth('signup')" style="padding:18px 44px;font-size:13px">
+      <button class="btn-primary" id="ctaPrimaryBtn" style="padding:18px 44px;font-size:13px">
         <span>Build My Resume — It's Free</span>
       </button>
-      <button class="btn-ghost" onclick="openAuth('login')">I have an account</button>
+      <button class="btn-ghost" id="ctaSignInBtn">I have an account</button>
     </div>
     <p class="cta-fine reveal reveal-delay-4">Free to use · No account required to try</p>
   </div>
@@ -1824,13 +1824,13 @@ footer {
     </div>
     <div class="footer-bottom">
       <span class="footer-copy">© 2026 RÉSUMÉ.AI — All rights reserved</span>
-      <span class="footer-copy">DexterLabs</span>
+      <span class="footer-copy">Built with Claude · Anthropic</span>
     </div>
   </div>
 </footer>
 
 <!-- ── AUTH MODAL ─────────────────────────────────────────────────────────── -->
-<div class="auth-overlay" id="authOverlay" onclick="handleOverlayClick(event)">
+<div class="auth-overlay" id="authOverlay">
   <div class="auth-modal" id="authModal">
     <!-- Left panel -->
     <div class="auth-left">
@@ -1854,11 +1854,11 @@ footer {
 
     <!-- Right panel — form -->
     <div class="auth-right">
-      <button class="auth-close" onclick="closeAuth()">✕</button>
+      <button class="auth-close" id="authClose">✕</button>
 
       <div class="auth-tabs">
-        <button class="auth-tab active" id="tabSignup" onclick="switchTab('signup')">Create Account</button>
-        <button class="auth-tab" id="tabLogin" onclick="switchTab('login')">Sign In</button>
+        <button class="auth-tab active" id="tabSignup">Create Account</button>
+        <button class="auth-tab" id="tabLogin">Sign In</button>
       </div>
 
       <!-- Sign up form -->
@@ -1866,24 +1866,24 @@ footer {
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">First Name</label>
-            <input class="form-input" type="text" placeholder="Jane" />
+            <input class="form-input" id="signupFirstName" type="text" placeholder="Jane" />
           </div>
           <div class="form-group">
             <label class="form-label">Last Name</label>
-            <input class="form-input" type="text" placeholder="Smith" />
+            <input class="form-input" id="signupLastName" type="text" placeholder="Smith" />
           </div>
         </div>
         <div class="form-group">
           <label class="form-label">Email Address</label>
-          <input class="form-input" type="email" placeholder="jane@example.com" />
+          <input class="form-input" id="signupEmail" type="email" placeholder="jane@example.com" />
         </div>
         <div class="form-group">
           <label class="form-label">Password</label>
-          <input class="form-input" type="password" placeholder="8+ characters" />
+          <input class="form-input" id="signupPassword" type="password" placeholder="8+ characters" />
         </div>
-        <button class="btn-form" onclick="handleSignup()">Create Free Account →</button>
+        <button class="btn-form" id="btnSignup">Create Free Account →</button>
         <div class="form-divider">or</div>
-        <button class="btn-oauth" onclick="handleOAuth('google')">
+        <button class="btn-oauth" id="btnGoogleSignup">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
             <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -1893,7 +1893,7 @@ footer {
           Continue with Google
         </button>
         <p class="form-footer">
-          Already have an account? <a onclick="switchTab('login')">Sign in</a>
+          Already have an account? <a id="switchToLogin" style="cursor:pointer">Sign in</a>
         </p>
         <p class="form-footer" style="margin-top:8px">
           By creating an account you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
@@ -1904,15 +1904,15 @@ footer {
       <div class="auth-panel" id="panelLogin">
         <div class="form-group">
           <label class="form-label">Email Address</label>
-          <input class="form-input" type="email" placeholder="jane@example.com" />
+          <input class="form-input" id="loginEmail" type="email" placeholder="jane@example.com" />
         </div>
         <div class="form-group">
           <label class="form-label">Password</label>
-          <input class="form-input" type="password" placeholder="Your password" />
+          <input class="form-input" id="loginPassword" type="password" placeholder="Your password" />
         </div>
-        <button class="btn-form" onclick="handleLogin()">Sign In →</button>
+        <button class="btn-form" id="btnLogin">Sign In →</button>
         <div class="form-divider">or</div>
-        <button class="btn-oauth" onclick="handleOAuth('google')">
+        <button class="btn-oauth" id="btnGoogleLogin">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
             <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -1925,18 +1925,47 @@ footer {
           <a href="#">Forgot your password?</a>
         </p>
         <p class="form-footer" style="margin-top:8px">
-          No account? <a onclick="switchTab('signup')">Create one free</a>
+          No account? <a id="switchToSignup" style="cursor:pointer">Create one free</a>
         </p>
       </div>
     </div>
   </div>
 </div>
 
-<script>
+<script type="module">
+// ── FIREBASE INIT ─────────────────────────────────────────────────────────────
+import { initializeApp }                         from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { getAnalytics }                          from "https://www.gstatic.com/firebasejs/12.9.0/firebase-analytics.js";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+  onAuthStateChanged,
+  signOut,
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey:            "AIzaSyDgL_8ARg1OMo12ShvNagLGdOyKzivJhYA",
+  authDomain:        "resume-ai-85c1f.firebaseapp.com",
+  projectId:         "resume-ai-85c1f",
+  storageBucket:     "resume-ai-85c1f.firebasestorage.app",
+  messagingSenderId: "559235903889",
+  appId:             "1:559235903889:web:f668f632f82e0fc921aa30",
+  measurementId:     "G-SXSBXQT878",
+};
+
+const app       = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const auth      = getAuth(app);
+const gProvider = new GoogleAuthProvider();
+
 // ── NAV SCROLL ────────────────────────────────────────────────────────────────
-const nav = document.getElementById('nav');
+const navEl = document.getElementById('nav');
 window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 40);
+  navEl.classList.toggle('scrolled', window.scrollY > 40);
 });
 
 // ── MOBILE MENU ───────────────────────────────────────────────────────────────
@@ -1948,121 +1977,248 @@ function toggleMenu() {
   const bars = document.querySelectorAll('.nav-hamburger span');
   if (menuOpen) {
     bars[0].style.transform = 'rotate(45deg) translate(4.5px, 4.5px)';
-    bars[1].style.opacity = '0';
+    bars[1].style.opacity   = '0';
     bars[2].style.transform = 'rotate(-45deg) translate(4.5px, -4.5px)';
   } else {
     bars.forEach(b => { b.style.transform = ''; b.style.opacity = ''; });
   }
 }
+document.getElementById('hamburger').addEventListener('click', toggleMenu);
 document.querySelectorAll('.mobile-menu a').forEach(a => {
-  a.addEventListener('click', () => {
-    menuOpen = false;
-    toggleMenu();
-  });
+  a.addEventListener('click', () => { menuOpen = true; toggleMenu(); });
 });
 
 // ── HERO SCORE ANIMATION ──────────────────────────────────────────────────────
 function animateScore() {
-  const ring = document.getElementById('heroRing');
-  const scoreEl = document.getElementById('heroScore');
-  const target = 72;
-  const circumference = 289;
-  const offset = circumference - (target / 100) * circumference;
-  ring.style.strokeDashoffset = offset;
-
-  let current = 0;
-  const duration = 1800;
+  const ring  = document.getElementById('heroRing');
+  const score = document.getElementById('heroScore');
+  const target = 72, circ = 289;
+  ring.style.strokeDashoffset = circ - (target / 100) * circ;
   const start = performance.now();
-  function tick(now) {
-    const elapsed = now - start;
-    const progress = Math.min(elapsed / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
-    current = Math.round(eased * target);
-    scoreEl.textContent = current;
-    if (progress < 1) requestAnimationFrame(tick);
-  }
+  const tick = (now) => {
+    const p = Math.min((now - start) / 1800, 1);
+    score.textContent = Math.round((1 - Math.pow(1 - p, 3)) * target);
+    if (p < 1) requestAnimationFrame(tick);
+  };
   setTimeout(() => requestAnimationFrame(tick), 800);
 }
 animateScore();
 
 // ── SCROLL REVEAL ─────────────────────────────────────────────────────────────
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
 // ── ATS BARS ANIMATION ────────────────────────────────────────────────────────
-const barObserver = new IntersectionObserver((entries) => {
+const barObs = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.querySelectorAll('.ats-bar-fill').forEach((bar, i) => {
-        setTimeout(() => bar.classList.add('animated'), i * 120);
-      });
-      barObserver.unobserve(entry.target);
-    }
+    if (!entry.isIntersecting) return;
+    entry.target.querySelectorAll('.ats-bar-fill').forEach((bar, i) => {
+      setTimeout(() => bar.classList.add('animated'), i * 120);
+    });
+    barObs.unobserve(entry.target);
   });
 }, { threshold: 0.3 });
-
 const atsVisual = document.querySelector('.ats-visual');
-if (atsVisual) barObserver.observe(atsVisual);
+if (atsVisual) barObs.observe(atsVisual);
+
+// ── SMOOTH SCROLL ─────────────────────────────────────────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
 
 // ── AUTH MODAL ────────────────────────────────────────────────────────────────
 function openAuth(tab = 'signup') {
   document.getElementById('authOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
   switchTab(tab);
+  clearErrors();
 }
 function closeAuth() {
   document.getElementById('authOverlay').classList.remove('open');
   document.body.style.overflow = '';
+  clearErrors();
 }
-function handleOverlayClick(e) {
-  if (e.target === document.getElementById('authOverlay')) closeAuth();
-}
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAuth(); });
-
 function switchTab(tab) {
   document.getElementById('tabSignup').classList.toggle('active', tab === 'signup');
   document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
   document.getElementById('panelSignup').classList.toggle('active', tab === 'signup');
   document.getElementById('panelLogin').classList.toggle('active', tab === 'login');
+  clearErrors();
 }
 
-// Stub handlers — wire to your auth backend
-function handleSignup() {
-  const btn = event.currentTarget;
-  btn.textContent = 'Creating account...';
-  btn.disabled = true;
-  setTimeout(() => {
-    btn.textContent = '✓ Account created — redirecting';
-    setTimeout(() => { closeAuth(); btn.textContent = 'Create Free Account →'; btn.disabled = false; }, 1200);
-  }, 1400);
-}
-function handleLogin() {
-  const btn = event.currentTarget;
-  btn.textContent = 'Signing in...';
-  btn.disabled = true;
-  setTimeout(() => {
-    btn.textContent = '✓ Signed in — redirecting';
-    setTimeout(() => { closeAuth(); btn.textContent = 'Sign In →'; btn.disabled = false; }, 1200);
-  }, 1200);
-}
-function handleOAuth(provider) {
-  console.log('OAuth:', provider, '— wire to your auth provider');
-}
-
-// ── SMOOTH SCROLL ─────────────────────────────────────────────────────────────
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const target = document.querySelector(a.getAttribute('href'));
-    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-  });
+// Overlay click-outside to close
+document.getElementById('authOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('authOverlay')) closeAuth();
 });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAuth(); });
+
+// Tab switches
+document.getElementById('tabSignup').addEventListener('click', () => switchTab('signup'));
+document.getElementById('tabLogin').addEventListener('click',  () => switchTab('login'));
+document.getElementById('switchToLogin').addEventListener('click',  () => switchTab('login'));
+document.getElementById('switchToSignup').addEventListener('click', () => switchTab('signup'));
+document.getElementById('authClose').addEventListener('click', closeAuth);
+
+// Open auth triggers (all the CTA / nav buttons)
+[
+  ['navSignIn',    'login'],
+  ['navSignUp',    'signup'],
+  ['heroPrimaryBtn', 'signup'],
+  ['mobileCtaBtn',   'signup'],
+  ['ctaPrimaryBtn',  'signup'],
+  ['ctaSignInBtn',   'login'],
+].forEach(([id, tab]) => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('click', e => { e.preventDefault(); openAuth(tab); });
+});
+
+// ── ERROR DISPLAY ─────────────────────────────────────────────────────────────
+function showError(panelId, message) {
+  let err = document.getElementById(panelId + 'Error');
+  if (!err) {
+    err = document.createElement('div');
+    err.id = panelId + 'Error';
+    err.style.cssText = 'background:rgba(200,50,50,0.1);border:1px solid rgba(200,50,50,0.3);border-radius:3px;padding:10px 14px;font-family:var(--mono);font-size:11px;color:#e07070;line-height:1.6;margin-top:-4px';
+    const btn = document.getElementById(panelId === 'signup' ? 'btnSignup' : 'btnLogin');
+    btn.parentNode.insertBefore(err, btn);
+  }
+  err.textContent = message;
+}
+function clearErrors() {
+  ['panelSignupError','panelLoginError'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = '';
+  });
+}
+
+// ── BTN STATE HELPERS ─────────────────────────────────────────────────────────
+function setBtnLoading(btn, text) {
+  btn.disabled = true;
+  btn.dataset.original = btn.textContent;
+  btn.textContent = text;
+}
+function setBtnDone(btn, text) {
+  btn.textContent = text;
+}
+function resetBtn(btn) {
+  btn.disabled = false;
+  btn.textContent = btn.dataset.original || btn.textContent;
+}
+
+// ── AUTH STATE → NAV ──────────────────────────────────────────────────────────
+onAuthStateChanged(auth, (user) => {
+  const signInBtn = document.getElementById('navSignIn');
+  const signUpBtn = document.getElementById('navSignUp');
+  if (!signInBtn || !signUpBtn) return;
+
+  if (user) {
+    // Show name + sign out instead of sign in / start free
+    const name = user.displayName?.split(' ')[0] || user.email?.split('@')[0] || 'Account';
+    signInBtn.textContent = name;
+    signInBtn.removeEventListener('click', signInBtn._handler);
+    signInBtn.style.cssText = 'cursor:default;pointer-events:none';
+
+    signUpBtn.textContent   = 'Sign Out';
+    signUpBtn.style.cssText = '';
+    signUpBtn.onclick = async (e) => {
+      e.preventDefault();
+      await signOut(auth);
+    };
+  } else {
+    signInBtn.textContent = 'Sign In';
+    signInBtn.style.cssText = '';
+    signInBtn.onclick = (e) => { e.preventDefault(); openAuth('login'); };
+
+    signUpBtn.innerHTML  = '<span>Start Free</span>';
+    signUpBtn.style.cssText = '';
+    signUpBtn.onclick = (e) => { e.preventDefault(); openAuth('signup'); };
+  }
+});
+
+// ── GOOGLE SIGN-IN (shared by signup + login buttons) ────────────────────────
+async function handleGoogle(btn) {
+  setBtnLoading(btn, 'Opening Google...');
+  try {
+    await signInWithPopup(auth, gProvider);
+    setBtnDone(btn, '✓ Signed in');
+    setTimeout(closeAuth, 800);
+  } catch (err) {
+    resetBtn(btn);
+    const panel = btn.id === 'btnGoogleSignup' ? 'panelSignup' : 'panelLogin';
+    showError(panel, friendlyError(err.code));
+  }
+}
+document.getElementById('btnGoogleSignup').addEventListener('click', (e) => handleGoogle(e.currentTarget));
+document.getElementById('btnGoogleLogin').addEventListener('click',  (e) => handleGoogle(e.currentTarget));
+
+// ── EMAIL SIGN-UP ─────────────────────────────────────────────────────────────
+document.getElementById('btnSignup').addEventListener('click', async (e) => {
+  const btn      = e.currentTarget;
+  const email    = document.getElementById('signupEmail').value.trim();
+  const password = document.getElementById('signupPassword').value;
+  const first    = document.getElementById('signupFirstName').value.trim();
+  const last     = document.getElementById('signupLastName').value.trim();
+
+  if (!email || !password) { showError('panelSignup', 'Email and password are required.'); return; }
+  if (password.length < 8)  { showError('panelSignup', 'Password must be at least 8 characters.'); return; }
+
+  setBtnLoading(btn, 'Creating account...');
+  clearErrors();
+  try {
+    const { user } = await createUserWithEmailAndPassword(auth, email, password);
+    if (first || last) {
+      await updateProfile(user, { displayName: [first, last].filter(Boolean).join(' ') });
+    }
+    setBtnDone(btn, '✓ Account created');
+    setTimeout(closeAuth, 900);
+  } catch (err) {
+    resetBtn(btn);
+    showError('panelSignup', friendlyError(err.code));
+  }
+});
+
+// ── EMAIL SIGN-IN ─────────────────────────────────────────────────────────────
+document.getElementById('btnLogin').addEventListener('click', async (e) => {
+  const btn      = e.currentTarget;
+  const email    = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+
+  if (!email || !password) { showError('panelLogin', 'Email and password are required.'); return; }
+
+  setBtnLoading(btn, 'Signing in...');
+  clearErrors();
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    setBtnDone(btn, '✓ Signed in');
+    setTimeout(closeAuth, 800);
+  } catch (err) {
+    resetBtn(btn);
+    showError('panelLogin', friendlyError(err.code));
+  }
+});
+
+// ── FIREBASE ERROR → HUMAN MESSAGE ───────────────────────────────────────────
+function friendlyError(code) {
+  const map = {
+    'auth/email-already-in-use':    'An account with this email already exists. Try signing in.',
+    'auth/invalid-email':           'Please enter a valid email address.',
+    'auth/weak-password':           'Password must be at least 8 characters.',
+    'auth/user-not-found':          'No account found with this email.',
+    'auth/wrong-password':          'Incorrect password. Please try again.',
+    'auth/invalid-credential':      'Incorrect email or password.',
+    'auth/too-many-requests':       'Too many attempts. Please wait a moment and try again.',
+    'auth/popup-closed-by-user':    'Sign-in popup was closed. Please try again.',
+    'auth/popup-blocked':           'Popup was blocked by your browser. Please allow popups for this site.',
+    'auth/network-request-failed':  'Network error. Check your connection and try again.',
+    'auth/cancelled-popup-request': '',  // silent — user just opened a second popup
+  };
+  return map[code] || `Something went wrong (${code}). Please try again.`;
+}
 </script>
 </body>
 </html>
